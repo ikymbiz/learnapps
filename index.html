@@ -80,7 +80,12 @@
     .chart-wrap{position:relative;height:160px}
 
     /* ── ヒーロー ── */
-    .hero{position:relative;min-height:260px;display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:32px;box-shadow:var(--shadow);padding:clamp(1.25rem,5vw,2.5rem);margin-bottom:1.25rem;overflow:hidden;animation:pop .55s ease-out both}
+    .hero{position:relative;display:flex;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:32px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:1.25rem;animation:pop .55s ease-out both}
+    .hero.has-banner{padding:0;min-height:auto}
+    .hero.has-banner::before,.hero.has-banner::after{display:none}
+    .hero-banner{display:block;width:100%;height:auto;border-radius:28px}
+    .hero-text{display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;padding:clamp(1.25rem,5vw,2.5rem);min-height:260px;width:100%}
+    .hero:not(.has-banner) .hero-text{display:grid}
     .hero::before{content:'✦';position:absolute;top:22px;right:34%;font-size:2rem;color:#ffcf33}
     .hero::after{content:var(--mascot,'');position:absolute;right:clamp(1rem,6vw,5rem);bottom:10px;font-size:clamp(6rem,18vw,10rem);filter:drop-shadow(0 12px 0 rgba(39,50,77,.08));animation:float 2.2s ease-in-out infinite alternate}
     .hero-eyebrow{display:inline-flex;width:fit-content;background:#e6f7ff;color:#1574b8;border:3px solid #bcecff;border-radius:999px;padding:7px 14px;font-weight:900;margin-bottom:.9rem}
@@ -89,12 +94,12 @@
     .hero p{max-width:560px;color:#4b5877;font-size:clamp(.92rem,2.2vw,1.05rem);line-height:1.85;font-weight:700}
 
     /* ── ミッションパネル ── */
-    .mission-panel{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;background:#fff;border:4px solid #ffe7a3;border-radius:24px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:2rem;animation:pop .55s .08s ease-out both}
-    .mission-title{font-weight:900;font-size:1rem}
-    .mission-text{color:var(--muted);font-weight:700;margin-top:2px;font-size:.88rem}
-    .mission-button{border:0;border-radius:999px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;font-weight:900;padding:11px 18px;min-height:44px;box-shadow:0 6px 0 #d78312;cursor:pointer;font-family:inherit;white-space:nowrap;font-size:.92rem;transition:.18s}
-    .mission-button:hover{transform:translateY(-2px);box-shadow:0 8px 0 #d78312}
-    .mission-button:active{transform:translateY(4px);box-shadow:0 2px 0 #d78312}
+    
+    
+    
+    
+    
+    
 
     /* ── グループ ── */
     .group{margin-bottom:2rem;animation:pop .55s ease-out both}
@@ -149,10 +154,9 @@
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
     @media(max-width:760px){
-      .hero{grid-template-columns:1fr;min-height:300px;padding-bottom:7.5rem}
+      .hero-text{grid-template-columns:1fr;min-height:280px}
+      .hero:not(.has-banner) .hero-text{padding-bottom:7.5rem}
       .hero::after{right:1rem;font-size:6rem}
-      .mission-panel{grid-template-columns:1fr}
-      .mission-button{width:100%}
       .header-badge{display:none}
     }
 
@@ -197,7 +201,19 @@
   </header>
 
   <main>
-    <!-- 未ログイン時のティーザー -->
+    <!-- 1. ヒーロー（最上部）-->
+    <section class="hero" id="hero">
+      <!-- 画像版（heroBannerが設定されている時にJSで表示）-->
+      <img id="heroBannerImg" class="hero-banner" alt="" hidden>
+      <!-- テキスト版（heroBannerが空の時にJSで表示）-->
+      <div class="hero-text" id="heroText">
+        <div class="hero-eyebrow" id="cfg-eyebrow">🎒 きょうのぼうけん</div>
+        <h1 id="cfg-heroTitle">勉強して、<em>宝箱を<br>あけよう！</em></h1>
+        <p id="cfg-heroDesc">カードをえらぶだけでスタート。1回5〜10分の小さなミッションで、星とバッジを集めよう。</p>
+      </div>
+    </section>
+
+    <!-- 2a. 未ログイン時のティーザー -->
     <div id="loginTeaser" class="login-teaser">
       <div class="teaser-icon">🔒</div>
       <div class="teaser-text">
@@ -206,7 +222,7 @@
       </div>
     </div>
 
-    <!-- ポイントダッシュボード（ログイン時のみ） -->
+    <!-- 2b. ポイントダッシュボード（ログイン時のみ）-->
     <div id="dashboard">
       <div class="dashboard-header">
         <div class="dashboard-title">📊 <span id="dashboardTitle">きょうのせいか</span></div>
@@ -217,22 +233,7 @@
       </div>
     </div>
 
-    <section class="hero">
-      <div>
-        <div class="hero-eyebrow" id="cfg-eyebrow">🎒 きょうのぼうけん</div>
-        <h1 id="cfg-heroTitle">勉強して、<em>宝箱を<br>あけよう！</em></h1>
-        <p id="cfg-heroDesc">カードをえらぶだけでスタート。1回5〜10分の小さなミッションで、星とバッジを集めよう。</p>
-      </div>
-    </section>
-
-    <section class="mission-panel" aria-label="今日のミッション">
-      <div>
-        <div class="mission-title" id="cfg-missionTitle">🎁 今日のミッション</div>
-        <div class="mission-text" id="cfg-missionText">さんすうを1つクリアすると、宝箱がひとつ開くよ。</div>
-      </div>
-      <button class="mission-button" type="button" onclick="focusFirstCard()">ミッションへ出発！</button>
-    </section>
-
+    <!-- 3. 教科グループ -->
     <div id="appRoot"></div>
   </main>
 
@@ -594,8 +595,6 @@
         set('cfg-subtitle',     CFG.appSubtitle);
         set('cfg-tagline',      CFG.appTagline);
         set('cfg-eyebrow',      CFG.heroEyebrow);
-        set('cfg-missionTitle', CFG.missionTitle);
-        set('cfg-missionText',  CFG.missionText);
         set('cfg-footer',       CFG.footerText);
 
         const titleEl = document.getElementById('cfg-heroTitle');
@@ -604,6 +603,22 @@
         }
         set('cfg-heroDesc', CFG.heroDesc);
 
+        // ヒーローバナー画像の制御
+        const heroEl   = document.getElementById('hero');
+        const bannerEl = document.getElementById('heroBannerImg');
+        const textEl   = document.getElementById('heroText');
+        if (CFG.heroBanner) {
+          bannerEl.src = CFG.heroBanner;
+          bannerEl.alt = CFG.appName || 'DD Learn';
+          bannerEl.hidden = false;
+          textEl.style.display = 'none';
+          heroEl.classList.add('has-banner');
+        } else {
+          bannerEl.hidden = true;
+          textEl.style.display = '';
+          heroEl.classList.remove('has-banner');
+        }
+
         // Google 初期化
         initGoogle(CFG.googleClientId);
 
@@ -611,17 +626,6 @@
         console.warn('config.json 読み込み失敗。デフォルト値を使用します。', e);
       }
       loadApps();
-    }
-
-    function focusFirstCard() {
-      const first = document.querySelector('.app-card');
-      if (first) {
-        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        first.animate(
-          [{ transform: 'scale(1)' }, { transform: 'scale(1.04) rotate(-1deg)' }, { transform: 'scale(1)' }],
-          { duration: 650, easing: 'ease-out' }
-        );
-      }
     }
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApp(); });

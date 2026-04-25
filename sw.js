@@ -1,4 +1,4 @@
-const CACHE_NAME = 'learning-hub-v3';
+const CACHE_NAME = 'dd-learn-v4';
 const STATIC_ASSETS = [
   './index.html',
   './config.json',
@@ -6,7 +6,9 @@ const STATIC_ASSETS = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './icon.svg'
+  './icon.svg',
+  './assets/hero-banner-illustrated.png',
+  './assets/hero-banner-simple.png'
 ];
 
 // Install: cache static assets

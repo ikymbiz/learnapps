@@ -7,11 +7,10 @@
   "heroTitle": "毎日少しずつ、",
   "heroTitleEm": "ぐんぐん<br>かしこく！",
   "heroDesc": "好きなアプリを選んで、楽しく学習しよう。続けるほど、自分の成長が見えるよ。",
-  "missionTitle": "🎯 今日の目標",
-  "missionText": "1日1つでもアプリをクリアして、ポイントをためよう！",
   "footerText": "© 2026 DD Learn — dd-learn.com",
   "themeColor": "#39a7ff",
   "mascot": "",
   "googleClientId": "23728484987-r1jpe2hh1s5of46v3n1bicgc8tvtgs03.apps.googleusercontent.com",
-  "pointsChartDays": 7
+  "pointsChartDays": 7,
+  "heroBanner": "assets/hero-banner-illustrated.png"
 }
