@@ -1,0 +1,18 @@
+{
+  "name": "まなびクエスト",
+  "short_name": "まなクエ",
+  "description": "小学生が毎日少しだけ勉強したくなる学習ハブ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#b9ecff",
+  "theme_color": "#39a7ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

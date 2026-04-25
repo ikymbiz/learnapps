@@ -1,0 +1,42 @@
+[
+  {
+    "id": "math",
+    "name": "さんすうの森",
+    "icon": "🧮",
+    "description": "たし算・ひき算を解いて、森の宝箱をあけよう！",
+    "url": "https://example.com/math",
+    "color": "#38bdf8",
+    "level": "おすすめ",
+    "reward": "⭐ 20"
+  },
+  {
+    "id": "japanese",
+    "name": "ことばの洞くつ",
+    "icon": "📖",
+    "description": "漢字と読解にチャレンジ。ことばのカギを集めよう！",
+    "url": "https://example.com/japanese",
+    "color": "#fb7185",
+    "level": "10分",
+    "reward": "💎 15"
+  },
+  {
+    "id": "science",
+    "name": "りか実験ラボ",
+    "icon": "🔬",
+    "description": "ふしぎな実験カードで、理科のひみつを発見しよう。",
+    "url": "https://example.com/science",
+    "color": "#4ade80",
+    "level": "人気",
+    "reward": "🧪 12"
+  },
+  {
+    "id": "english",
+    "name": "えいごスター",
+    "icon": "🌟",
+    "description": "ABCと単語を声に出して、スターを集めよう！",
+    "url": "https://example.com/english",
+    "color": "#facc15",
+    "level": "5分",
+    "reward": "🏅 10"
+  }
+]
