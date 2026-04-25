@@ -86,15 +86,6 @@
         "url": "https://ikymbiz.github.io/quiz-geo-japan/",
         "level": "おすすめ",
         "reward": null
-      },
-      {
-        "id": "social-history",
-        "name": "れきしクエスト",
-        "icon": "🏯",
-        "description": "日本の歴史を年表とまんがで学ぼう。",
-        "url": "https://example.com/social-history",
-        "level": "10分",
-        "reward": "🏆 20"
       }
     ]
   },
