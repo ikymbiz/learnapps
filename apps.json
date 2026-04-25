@@ -135,24 +135,6 @@
     ]
   },
   {
-    "id": "tools",
-    "type": "general",
-    "name": "べんりなどうぐ",
-    "icon": "🛠️",
-    "color": "#a78bfa",
-    "apps": [
-      {
-        "id": "timer",
-        "name": "べんきょうタイマー",
-        "icon": "⏱️",
-        "description": "25分集中→5分休憩のポモドーロ。",
-        "url": "https://example.com/timer",
-        "level": "いつでも",
-        "reward": null
-      }
-    ]
-  },
-  {
     "id": "quiz",
     "type": "general",
     "name": "いきぬき",
@@ -211,6 +193,24 @@
         "description": "",
         "url": "https://ikymbiz.github.io/sudoku/",
         "level": "おすすめ",
+        "reward": null
+      }
+    ]
+  },
+  {
+    "id": "tools",
+    "type": "general",
+    "name": "べんりなどうぐ",
+    "icon": "🛠️",
+    "color": "#a78bfa",
+    "apps": [
+      {
+        "id": "timer",
+        "name": "べんきょうタイマー",
+        "icon": "⏱️",
+        "description": "25分集中→5分休憩のポモドーロ。",
+        "url": "https://example.com/timer",
+        "level": "いつでも",
         "reward": null
       }
     ]
