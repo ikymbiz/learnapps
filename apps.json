@@ -169,5 +169,32 @@
         "reward": null
       }
     ]
+  },
+  {
+    "id": "quiz",
+    "type": "general",
+    "name": "いきぬき",
+    "icon": "🛩️",
+    "color": "#a78bfa",
+    "apps": [
+      {
+        "id": "kids-news",
+        "name": "キッズ・ニュース",
+        "icon": "📻️",
+        "description": "たのしくニュースで学ぼう",
+        "url": "https://ikymbiz.github.io/kids-news/",
+        "level": "おすすめ",
+        "reward": null
+      },
+      {
+        "id": "game-planaria",
+        "name": "プラナリア",
+        "icon": "🪱",
+        "description": "",
+        "url": "https://ikymbiz.github.io/game-planaria/",
+        "level": "おすすめ",
+        "reward": null
+      }
+    ]
   }
 ]
