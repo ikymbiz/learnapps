@@ -16,22 +16,13 @@
         "reward": null
       },
       {
-        "id": "math-forest",
-        "name": "さんすうの森",
+        "id": "quiz-flash-anzan",
+        "name": "フラッシュあんざん",
         "icon": "🌲",
-        "description": "たし算・ひき算でぼうけんしよう！",
-        "url": "https://example.com/math-forest",
+        "description": "数字をおぼえてけいさんしよう！",
+        "url": "https://ikymbiz.github.io/quiz-flash-anzan/",
         "level": "おすすめ",
         "reward": "⭐ 20"
-      },
-      {
-        "id": "math-shape",
-        "name": "かたちのひみつ",
-        "icon": "📐",
-        "description": "図形のパズルで考える力をきたえよう。",
-        "url": "https://example.com/math-shape",
-        "level": "5分",
-        "reward": "⭐ 15"
       }
     ]
   },
