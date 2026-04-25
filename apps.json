@@ -79,6 +79,15 @@
     "color": "#f97316",
     "apps": [
       {
+        "id": "quiz-flags",
+        "name": "国旗クイズ",
+        "icon": "🎌",
+        "description": "国旗をおぼえよう",
+        "url": "https://ikymbiz.github.io/quiz-flags/",
+        "level": "おすすめ",
+        "reward": null
+      },
+      {
         "id": "social-map",
         "name": "せかいの地図たんけん",
         "icon": "🗺️",
@@ -95,15 +104,6 @@
         "url": "https://example.com/social-history",
         "level": "10分",
         "reward": "🏆 20"
-      },
-      {
-        "id": "quiz-flags",
-        "name": "国旗クイズ",
-        "icon": "🎌",
-        "description": "国旗をおぼえよう",
-        "url": "https://ikymbiz.github.io/quiz-flags/",
-        "level": "おすすめ",
-        "reward": null
       }
     ]
   },
