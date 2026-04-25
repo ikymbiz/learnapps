@@ -36,7 +36,10 @@ dd-learn/
 │   └── hero-banner-simple.png       ヒーローバナー（シンプル版）
 ├── README.md         このファイル
 ├── STRUCTURE.md      サイト構成定義（編集して構造を変更）
-└── AI_CONTEXT.md     コード生成 AI 向けドキュメント
+├── AI_CONTEXT.md     コード生成 AI 向けドキュメント
+└── admin/            管理画面（GitHub PATで JSON を編集）
+    ├── index.html
+    └── README.md
 ```
 
 ---
@@ -114,6 +117,10 @@ git push
 ### サイト構成（セクションの並び・追加・削除）
 
 `STRUCTURE.md` を編集 → AI に「STRUCTURE.md に従って index.html を更新して」と依頼。
+
+### 管理画面で apps/config を編集
+
+`https://dd-learn.com/admin/` にアクセス。GitHub PAT を入力すれば、ブラウザから直接 `apps.json` / `config.json` を編集してコミットできます。詳細は [admin/README.md](./admin/README.md) を参照。
 
 ---
 

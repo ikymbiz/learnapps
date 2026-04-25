@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dd-learn-v5';
+const CACHE_NAME = 'dd-learn-v7';
 const STATIC_ASSETS = [
   './index.html',
   './config.json',
