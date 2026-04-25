@@ -34,20 +34,11 @@
     "color": "#fb7185",
     "apps": [
       {
-        "id": "japanese-cave",
-        "name": "ことばの洞くつ",
-        "icon": "🕹️",
-        "description": "漢字と読解にチャレンジ。",
-        "url": "https://example.com/japanese-cave",
-        "level": "10分",
-        "reward": "💎 15"
-      },
-      {
         "id": "japanese-kanji",
         "name": "漢字けんてい",
         "icon": "✍️",
         "description": "画数・読み・書き順をマスター！",
-        "url": "https://example.com/japanese-kanji",
+        "url": "https://ikymbiz.github.io/quiz-kanji/",
         "level": "人気",
         "reward": "💎 20"
       }
@@ -106,13 +97,13 @@
         "reward": "🏆 20"
       },
       {
-        "id": "social-life",
-        "name": "まちのしごと図鑑",
-        "icon": "🏪",
-        "description": "身近なお店や仕事のしくみを知ろう。",
-        "url": "https://example.com/social-life",
-        "level": "5分",
-        "reward": "🏆 12"
+        "id": "quiz-flags",
+        "name": "国旗クイズ",
+        "icon": "🎌",
+        "description": "国旗をおぼえよう",
+        "url": "https://ikymbiz.github.io/quiz-flags/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   },
