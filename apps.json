@@ -194,6 +194,15 @@
         "url": "https://ikymbiz.github.io/game-planaria/",
         "level": "おすすめ",
         "reward": null
+      },
+      {
+        "id": "quiz-mofmof",
+        "name": "もふもふクイズ",
+        "icon": "🐕️",
+        "description": "",
+        "url": "https://ikymbiz.github.io/quiz-mofmof/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   }
