@@ -1,13 +1,31 @@
 {
-  "name": "まなびクエスト",
-  "short_name": "まなクエ",
-  "description": "小学生が毎日少しだけ勉強したくなる学習ハブ",
+  "name": "DD Learn",
+  "short_name": "DD Learn",
+  "description": "毎日少しずつ、ぐんぐんかしこく。子ども向け学習プラットフォーム",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#b9ecff",
   "theme_color": "#39a7ff",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "icon.svg",
       "sizes": "any",

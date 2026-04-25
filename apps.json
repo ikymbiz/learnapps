@@ -10,7 +10,7 @@
         "id": "math-forest",
         "name": "さんすうの森",
         "icon": "🌲",
-        "description": "たし算・ひき算を解いて、森の宝箱をあけよう！",
+        "description": "たし算・ひき算でぼうけんしよう！",
         "url": "https://example.com/math-forest",
         "level": "おすすめ",
         "reward": "⭐ 20"
@@ -19,7 +19,7 @@
         "id": "math-rocket",
         "name": "かけ算ロケット",
         "icon": "🚀",
-        "description": "九九をマスターしてロケットを宇宙へ飛ばせ！",
+        "description": "九九をマスターして宇宙へ！",
         "url": "https://example.com/math-rocket",
         "level": "チャレンジ",
         "reward": "⭐ 30"
@@ -28,7 +28,7 @@
         "id": "math-shape",
         "name": "かたちのひみつ",
         "icon": "📐",
-        "description": "三角形・四角形の面積をパズルで学ぼう。",
+        "description": "図形のパズルで考える力をきたえよう。",
         "url": "https://example.com/math-shape",
         "level": "5分",
         "reward": "⭐ 15"
@@ -46,16 +46,16 @@
         "id": "japanese-cave",
         "name": "ことばの洞くつ",
         "icon": "🕹️",
-        "description": "漢字と読解にチャレンジ。ことばのカギを集めよう！",
+        "description": "漢字と読解にチャレンジ。",
         "url": "https://example.com/japanese-cave",
         "level": "10分",
         "reward": "💎 15"
       },
       {
         "id": "japanese-kanji",
-        "name": "漢字けんたい",
+        "name": "漢字けんてい",
         "icon": "✍️",
-        "description": "画数・読み方・書き順をバッジでマスター！",
+        "description": "画数・読み・書き順をマスター！",
         "url": "https://example.com/japanese-kanji",
         "level": "人気",
         "reward": "💎 20"
@@ -73,7 +73,7 @@
         "id": "science-lab",
         "name": "りか実験ラボ",
         "icon": "⚗️",
-        "description": "ふしぎな実験カードで、理科のひみつを発見しよう。",
+        "description": "ふしぎな実験のひみつを発見！",
         "url": "https://example.com/science-lab",
         "level": "人気",
         "reward": "🧪 12"
@@ -82,10 +82,46 @@
         "id": "science-nature",
         "name": "しぜんかんさつ帳",
         "icon": "🌿",
-        "description": "植物・虫・天気を記録して図鑑を完成させよう。",
+        "description": "植物・虫・天気を記録して図鑑をつくろう。",
         "url": "https://example.com/science-nature",
         "level": "5分",
         "reward": "🧪 10"
+      }
+    ]
+  },
+  {
+    "id": "social",
+    "type": "subject",
+    "name": "しゃかい",
+    "icon": "🌏",
+    "color": "#f97316",
+    "apps": [
+      {
+        "id": "social-map",
+        "name": "せかいの地図たんけん",
+        "icon": "🗺️",
+        "description": "国の名前と場所を楽しく覚えよう！",
+        "url": "https://example.com/social-map",
+        "level": "おすすめ",
+        "reward": "🏆 15"
+      },
+      {
+        "id": "social-history",
+        "name": "れきしクエスト",
+        "icon": "🏯",
+        "description": "日本の歴史を年表とまんがで学ぼう。",
+        "url": "https://example.com/social-history",
+        "level": "10分",
+        "reward": "🏆 20"
+      },
+      {
+        "id": "social-life",
+        "name": "まちのしごと図鑑",
+        "icon": "🏪",
+        "description": "身近なお店や仕事のしくみを知ろう。",
+        "url": "https://example.com/social-life",
+        "level": "5分",
+        "reward": "🏆 12"
       }
     ]
   },
@@ -100,7 +136,7 @@
         "id": "english-star",
         "name": "えいごスター",
         "icon": "🎤",
-        "description": "ABCと単語を声に出して、スターを集めよう！",
+        "description": "ABCと単語を声に出してれんしゅう！",
         "url": "https://example.com/english-star",
         "level": "5分",
         "reward": "🏅 10"
@@ -109,7 +145,7 @@
         "id": "english-game",
         "name": "えいごでボウリング",
         "icon": "🎳",
-        "description": "単語を聞いてピンを倒せ！リスニング練習ゲーム。",
+        "description": "リスニングゲームで楽しくきたえよう。",
         "url": "https://example.com/english-bowling",
         "level": "おすすめ",
         "reward": "🏅 18"
@@ -127,7 +163,7 @@
         "id": "timer",
         "name": "べんきょうタイマー",
         "icon": "⏱️",
-        "description": "25分集中 → 5分休憩のポモドーロタイマー。",
+        "description": "25分集中→5分休憩のポモドーロ。",
         "url": "https://example.com/timer",
         "level": "いつでも",
         "reward": null
@@ -136,7 +172,7 @@
         "id": "memo",
         "name": "きろくノート",
         "icon": "📝",
-        "description": "今日やったことをメモして達成感をためよう！",
+        "description": "今日やったことをメモしよう。",
         "url": "https://example.com/memo",
         "level": "いつでも",
         "reward": null
@@ -145,7 +181,7 @@
         "id": "schedule",
         "name": "しゅうかんスケジュール",
         "icon": "📅",
-        "description": "1週間の学習計画を自分でたてて管理しよう。",
+        "description": "1週間の学習計画をたててみよう。",
         "url": "https://example.com/schedule",
         "level": "いつでも",
         "reward": null

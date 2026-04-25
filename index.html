@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="まなクエ">
-  <meta name="theme-color" content="#39a7ff">
-  <link rel="apple-touch-icon" href="icon.svg">
-  <title>まなびクエスト</title>
+  <meta name="apple-mobile-web-app-title" content="DD Learn">
+  <meta id="themeColor" name="theme-color" content="#39a7ff">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title id="pageTitle">まなびクエスト</title>
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     *{-webkit-tap-highlight-color:transparent}
@@ -28,6 +33,8 @@
     }
     html{scroll-behavior:smooth}
     body{font-family:var(--font);color:var(--ink);min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 8% 10%,rgba(255,255,255,.85) 0 48px,transparent 50px),radial-gradient(circle at 88% 14%,rgba(255,255,255,.75) 0 64px,transparent 66px),linear-gradient(180deg,var(--sky) 0%,var(--sky2) 45%,#d7f8c7 45%,#eefbdc 100%)}
+
+    /* ── 背景 ── */
     .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
     .bg-canvas::before{content:'';position:absolute;left:-5vw;right:-5vw;bottom:0;height:46vh;background:radial-gradient(70% 70% at 8% 100%,#74d26a 0 38%,transparent 39%),radial-gradient(70% 70% at 45% 100%,#92df7b 0 42%,transparent 43%),radial-gradient(70% 70% at 92% 100%,#62c964 0 40%,transparent 41%);opacity:.65}
     .orb{position:absolute;border-radius:999px;animation:float 7s ease-in-out infinite alternate}
@@ -38,76 +45,115 @@
     @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
     @keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
     @keyframes shine{from{transform:translateX(-120%) rotate(12deg)}to{transform:translateX(220%) rotate(12deg)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-    header{position:sticky;top:0;z-index:200;height:64px;padding:0 var(--sr) 0 var(--sl);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);border-bottom:3px solid rgba(255,255,255,.9)}
-    .logo{display:flex;align-items:center;gap:10px;font-size:clamp(1.1rem,3vw,1.45rem);font-weight:900;color:#1769aa}
-    .logo::before{content:'⭐';font-size:1.7rem;animation:wiggle 1.8s ease-in-out infinite}
-    .logo span{display:block;color:#ff8a00;font-size:.68rem;font-weight:900;letter-spacing:.08em;margin-left:2px}
-    .header-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid #d8efff;color:#1769aa;border-radius:999px;padding:8px 14px;font-weight:900;font-size:.82rem;box-shadow:0 4px 0 #c9e8ff}
-    .pulse-dot{width:10px;height:10px;border-radius:50%;background:#31d16b;box-shadow:0 0 0 4px rgba(49,209,107,.18)}
+    /* ── ヘッダー ── */
+    header{position:sticky;top:0;z-index:200;height:64px;padding:0 var(--sr) 0 var(--sl);display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);border-bottom:3px solid rgba(255,255,255,.9)}
+    .logo{display:flex;align-items:center;gap:8px;font-size:clamp(1rem,3vw,1.35rem);font-weight:900;color:#1769aa;flex-shrink:0}
+    .logo::before{content:'⭐';font-size:1.6rem;animation:wiggle 1.8s ease-in-out infinite}
+    .logo span{display:block;color:#ff8a00;font-size:.65rem;font-weight:900;letter-spacing:.08em}
+    .header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .header-badge{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid #d8efff;color:#1769aa;border-radius:999px;padding:7px 12px;font-weight:900;font-size:.8rem;box-shadow:0 4px 0 #c9e8ff}
+    .pulse-dot{width:9px;height:9px;border-radius:50%;background:#31d16b;box-shadow:0 0 0 4px rgba(49,209,107,.18)}
 
+    /* ── Googleログインボタン ── */
+    .btn-login{display:flex;align-items:center;gap:7px;background:#fff;border:2.5px solid #e0e0e0;color:#3c4043;border-radius:999px;padding:7px 14px;min-height:40px;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #e0e0e0;transition:.15s;white-space:nowrap}
+    .btn-login:hover{background:#f8f8f8;box-shadow:0 4px 0 #d0d0d0;transform:translateY(-1px)}
+    .btn-login svg{flex-shrink:0}
+
+    /* ── ログイン済みユーザー表示 ── */
+    .user-chip{display:flex;align-items:center;gap:8px;background:#fff;border:2.5px solid #d8efff;border-radius:999px;padding:5px 12px 5px 5px;box-shadow:0 3px 0 #c9e8ff;cursor:pointer}
+    .user-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+    .user-name{font-size:.8rem;font-weight:900;color:#1769aa;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn-logout{background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;padding:4px 6px;border-radius:6px}
+    .btn-logout:hover{color:#e53e3e}
+
+    /* ── メイン ── */
     main{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:1.75rem var(--sr) var(--sb) var(--sl)}
 
-    .hero{position:relative;min-height:280px;display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:32px;box-shadow:var(--shadow);padding:clamp(1.25rem,5vw,2.5rem);margin-bottom:1.25rem;overflow:hidden;animation:pop .55s ease-out both}
-    .hero::before{content:'✦';position:absolute;top:22px;right:34%;font-size:2rem;color:#ffcf33}
-    .hero::after{content:'🦊';position:absolute;right:clamp(1rem,6vw,5rem);bottom:10px;font-size:clamp(6rem,18vw,10rem);filter:drop-shadow(0 12px 0 rgba(39,50,77,.08));animation:float 2.2s ease-in-out infinite alternate}
-    .hero-eyebrow{display:inline-flex;width:fit-content;background:#e6f7ff;color:#1574b8;border:3px solid #bcecff;border-radius:999px;padding:7px 14px;font-weight:900;margin-bottom:.9rem}
-    .hero h1{font-size:clamp(1.85rem,6vw,3.8rem);font-weight:900;line-height:1.12;letter-spacing:.02em;margin-bottom:.8rem}
-    .hero h1 em{font-style:normal;color:#ff8a00;text-shadow:0 4px 0 rgba(255,211,77,.4)}
-    .hero p{max-width:560px;color:#4b5877;font-size:clamp(.95rem,2.2vw,1.1rem);line-height:1.85;font-weight:700}
+    /* ── ポイントダッシュボード（ログイン時のみ表示）── */
+    #dashboard{display:none;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(232,246,255,.95));border:4px solid #fff;border-radius:28px;box-shadow:var(--shadow);padding:1.25rem 1.5rem;margin-bottom:1.5rem;animation:pop .5s ease-out both}
+    #dashboard.visible{display:block}
+    .dashboard-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+    .dashboard-title{font-size:1rem;font-weight:900;color:#1769aa;display:flex;align-items:center;gap:6px}
+    .today-points{display:flex;align-items:center;gap:6px;background:#fff3c4;border:2.5px solid #ffe28a;border-radius:999px;padding:6px 14px;font-weight:900;font-size:.95rem;color:#7a4b00}
+    .chart-wrap{position:relative;height:160px}
 
+    /* ── ヒーロー ── */
+    .hero{position:relative;min-height:260px;display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:32px;box-shadow:var(--shadow);padding:clamp(1.25rem,5vw,2.5rem);margin-bottom:1.25rem;overflow:hidden;animation:pop .55s ease-out both}
+    .hero::before{content:'✦';position:absolute;top:22px;right:34%;font-size:2rem;color:#ffcf33}
+    .hero::after{content:var(--mascot,'');position:absolute;right:clamp(1rem,6vw,5rem);bottom:10px;font-size:clamp(6rem,18vw,10rem);filter:drop-shadow(0 12px 0 rgba(39,50,77,.08));animation:float 2.2s ease-in-out infinite alternate}
+    .hero-eyebrow{display:inline-flex;width:fit-content;background:#e6f7ff;color:#1574b8;border:3px solid #bcecff;border-radius:999px;padding:7px 14px;font-weight:900;margin-bottom:.9rem}
+    .hero h1{font-size:clamp(1.75rem,6vw,3.6rem);font-weight:900;line-height:1.12;letter-spacing:.02em;margin-bottom:.8rem}
+    .hero h1 em{font-style:normal;color:#ff8a00;text-shadow:0 4px 0 rgba(255,211,77,.4)}
+    .hero p{max-width:560px;color:#4b5877;font-size:clamp(.92rem,2.2vw,1.05rem);line-height:1.85;font-weight:700}
+
+    /* ── ミッションパネル ── */
     .mission-panel{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;background:#fff;border:4px solid #ffe7a3;border-radius:24px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:2rem;animation:pop .55s .08s ease-out both}
     .mission-title{font-weight:900;font-size:1rem}
-    .mission-text{color:var(--muted);font-weight:700;margin-top:2px;font-size:.9rem}
-    .mission-button{border:0;border-radius:999px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;font-weight:900;padding:12px 20px;min-height:44px;box-shadow:0 6px 0 #d78312;cursor:pointer;font-family:inherit;white-space:nowrap;font-size:.95rem;transition:.18s}
+    .mission-text{color:var(--muted);font-weight:700;margin-top:2px;font-size:.88rem}
+    .mission-button{border:0;border-radius:999px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;font-weight:900;padding:11px 18px;min-height:44px;box-shadow:0 6px 0 #d78312;cursor:pointer;font-family:inherit;white-space:nowrap;font-size:.92rem;transition:.18s}
     .mission-button:hover{transform:translateY(-2px);box-shadow:0 8px 0 #d78312}
     .mission-button:active{transform:translateY(4px);box-shadow:0 2px 0 #d78312}
 
-    /* ── グループセクション ── */
-    .group{margin-bottom:2.25rem;animation:pop .55s ease-out both}
+    /* ── グループ ── */
+    .group{margin-bottom:2rem;animation:pop .55s ease-out both}
     .group-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-left:4px}
-    .group-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--group-color,#38bdf8);border-radius:999px;padding:8px 16px;box-shadow:0 4px 0 color-mix(in srgb,var(--group-color,#38bdf8) 60%,#000 40%)}
-    .group-badge-icon{font-size:1.3rem}
-    .group-badge-name{font-size:1rem;font-weight:900;color:var(--ink)}
+    .group-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--group-color,#38bdf8);border-radius:999px;padding:7px 15px;box-shadow:0 4px 0 color-mix(in srgb,var(--group-color,#38bdf8) 60%,#000 40%)}
+    .group-badge-icon{font-size:1.25rem}
+    .group-badge-name{font-size:.95rem;font-weight:900;color:var(--ink)}
     .group.general .group-badge{background:linear-gradient(135deg,#f3f0ff,#ede9fe);border-color:#c4b5fd;box-shadow:0 4px 0 #a78bfa55}
-    .group-count{font-size:.78rem;color:var(--muted);font-weight:700;margin-left:2px}
+    
 
-    /* ── カード行（モバイル: 横スクロール / デスクトップ: グリッド）── */
+    /* ── カード行 ── */
     .card-row{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;scrollbar-width:none;-ms-overflow-style:none}
     .card-row::-webkit-scrollbar{display:none}
-    @media(min-width:700px){.card-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));overflow-x:visible;scroll-snap-type:none;padding-bottom:0}}
+    @media(min-width:700px){.card-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));overflow-x:visible;scroll-snap-type:none;padding-bottom:0}}
 
     /* ── カード ── */
-    .app-card{position:relative;overflow:hidden;flex:0 0 210px;min-height:205px;background:var(--paper);border:4px solid #fff;border-radius:26px;padding:1.2rem;cursor:pointer;box-shadow:var(--shadow);scroll-snap-align:start;transition:.18s;animation:pop .55s ease-out both}
+    .app-card{position:relative;overflow:hidden;flex:0 0 205px;min-height:200px;background:var(--paper);border:4px solid #fff;border-radius:26px;padding:1.1rem;cursor:pointer;box-shadow:var(--shadow);scroll-snap-align:start;transition:.18s;animation:pop .55s ease-out both}
     @media(min-width:700px){.app-card{flex:unset}}
-    .app-card::before{content:'';position:absolute;inset:0 0 auto 0;height:76px;background:var(--card-color,#38bdf8);opacity:.86}
+    .app-card::before{content:'';position:absolute;inset:0 0 auto 0;height:74px;background:var(--card-color,#38bdf8);opacity:.86}
     .app-card::after{content:'';position:absolute;top:-20%;left:-40%;width:42%;height:150%;background:rgba(255,255,255,.35);transform:rotate(12deg)}
-    .app-card:hover{transform:translateY(-6px) rotate(-.8deg);box-shadow:0 20px 0 rgba(41,70,108,.08),0 22px 38px rgba(41,70,108,.18)}
+    .app-card:hover{transform:translateY(-6px) rotate(-.8deg);box-shadow:0 18px 0 rgba(41,70,108,.08),0 20px 36px rgba(41,70,108,.18)}
     .app-card:hover::after{animation:shine .7s ease-out}
-    .card-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem}
-    .icon-wrap{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;border:4px solid rgba(255,255,255,.9);font-size:1.9rem;box-shadow:0 6px 0 rgba(41,70,108,.08)}
-    .card-arrow{background:#fff;color:#1769aa;border-radius:999px;padding:8px 12px;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;box-shadow:0 4px 0 rgba(41,70,108,.08)}
-    .app-name{position:relative;z-index:1;font-size:1.05rem;font-weight:900;margin-bottom:.35rem}
-    .app-desc{position:relative;z-index:1;color:#596579;line-height:1.6;font-weight:700;font-size:.85rem;min-height:60px}
-    .card-tag{position:relative;z-index:1;display:inline-flex;margin-top:.85rem;color:#7a4b00;background:#fff3c4;border:2px solid #ffe28a;border-radius:999px;padding:5px 10px;font-size:.76rem;font-weight:900}
+    .card-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.85rem}
+    .icon-wrap{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;border:4px solid rgba(255,255,255,.9);font-size:1.85rem;box-shadow:0 6px 0 rgba(41,70,108,.08)}
+    .card-arrow{background:#fff;color:#1769aa;border-radius:999px;padding:8px 12px;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 4px 0 rgba(41,70,108,.08)}
+    .app-name{position:relative;z-index:1;font-size:1.02rem;font-weight:900;margin-bottom:.3rem}
+    .app-desc{position:relative;z-index:1;color:#596579;line-height:1.6;font-weight:700;font-size:.83rem;min-height:58px}
+    .card-tag{position:relative;z-index:1;display:inline-flex;margin-top:.8rem;color:#7a4b00;background:#fff3c4;border:2px solid #ffe28a;border-radius:999px;padding:5px 10px;font-size:.76rem;font-weight:900}
     .group.general .card-tag{color:#4c1d95;background:#ede9fe;border-color:#c4b5fd}
 
     /* ── ビューア ── */
     #viewer{display:none;position:fixed;inset:0;z-index:1000;flex-direction:column;background:#fff8df}
-    .viewer-bar{min-height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 max(1rem,env(safe-area-inset-right)) 0 max(1rem,env(safe-area-inset-left));background:rgba(255,255,255,.9);border-bottom:4px solid #d8efff;gap:1rem}
-    .viewer-title-wrap{display:flex;align-items:center;gap:10px;min-width:0;font-weight:900}
-    #viewerIcon{font-size:1.4rem;flex-shrink:0}
-    #viewerTitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .close-btn{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid #ffd0dc;color:#d12c5c;padding:10px 16px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:900;box-shadow:0 4px 0 #ffc1d0;flex-shrink:0}
+    .viewer-bar{min-height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(1rem,env(safe-area-inset-right)) 0 max(1rem,env(safe-area-inset-left));background:rgba(255,255,255,.9);border-bottom:4px solid #d8efff;gap:.75rem}
+    .viewer-title-wrap{display:flex;align-items:center;gap:8px;min-width:0;font-weight:900;flex:1}
+    #viewerIcon{font-size:1.3rem;flex-shrink:0}
+    #viewerTitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.95rem}
+    .viewer-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+    /* 完了ボタン */
+    .btn-done{display:flex;align-items:center;gap:5px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;border:none;padding:9px 14px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:900;font-size:.85rem;box-shadow:0 4px 0 #d78312;transition:.15s}
+    .btn-done:hover{transform:translateY(-1px);box-shadow:0 5px 0 #d78312}
+    .btn-done:active{transform:translateY(2px);box-shadow:0 2px 0 #d78312}
+    /* ログイン時のみ表示 */
+    .btn-done.hidden{display:none}
+
+    .close-btn{display:flex;align-items:center;gap:5px;background:#fff;border:3px solid #ffd0dc;color:#d12c5c;padding:9px 14px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:900;font-size:.85rem;box-shadow:0 4px 0 #ffc1d0;flex-shrink:0}
     #appFrame{flex:1;width:100%;border:none;background:white;padding-bottom:env(safe-area-inset-bottom)}
-    footer{position:relative;z-index:1;text-align:center;padding:1.5rem 1rem;color:var(--muted);font-weight:700;font-size:.85rem}
+    footer{position:relative;z-index:1;text-align:center;padding:1.5rem 1rem;color:var(--muted);font-weight:700;font-size:.83rem}
+
+    /* ── ポイントトースト ── */
+    #toast{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 80px);left:50%;transform:translateX(-50%) translateY(20px);background:#26324d;color:#fff;border-radius:999px;padding:12px 24px;font-weight:900;font-size:1rem;box-shadow:0 8px 24px rgba(0,0,0,.2);pointer-events:none;opacity:0;transition:opacity .3s,transform .3s;z-index:2000;white-space:nowrap}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
     @media(max-width:760px){
-      .hero{grid-template-columns:1fr;min-height:320px;padding-bottom:8rem}
-      .hero::after{right:1rem;font-size:6.5rem}
+      .hero{grid-template-columns:1fr;min-height:300px;padding-bottom:7.5rem}
+      .hero::after{right:1rem;font-size:6rem}
       .mission-panel{grid-template-columns:1fr}
       .mission-button{width:100%}
-      .header-badge{font-size:.74rem;padding:7px 10px}
+      .header-badge{display:none}
     }
   </style>
 </head>
@@ -119,23 +165,53 @@
   </div>
 
   <header>
-    <div class="logo">まなびクエスト <span>小学生MVP</span></div>
-    <div class="header-badge"><span class="pulse-dot"></span>今日も冒険中</div>
+    <div class="logo">
+      <span id="cfg-appName">まなびクエスト</span>
+      <span id="cfg-subtitle">小学生MVP</span>
+    </div>
+    <div class="header-right">
+      <div class="header-badge" id="statusBadge">
+        <span class="pulse-dot"></span>
+        <span id="cfg-tagline">今日も冒険中</span>
+      </div>
+      <!-- ログイン前 -->
+      <button class="btn-login" id="btnLogin" onclick="startLogin()">
+        <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+        Googleでログイン
+      </button>
+      <!-- ログイン後（初期非表示）-->
+      <div class="user-chip" id="userChip" style="display:none" onclick="toggleLogout()">
+        <img class="user-avatar" id="userAvatar" src="" alt="avatar">
+        <span class="user-name" id="userName"></span>
+      </div>
+      <button class="btn-logout" id="btnLogout" style="display:none" onclick="doLogout()">ログアウト</button>
+    </div>
   </header>
 
   <main>
+    <!-- ポイントダッシュボード（ログイン時のみ） -->
+    <div id="dashboard">
+      <div class="dashboard-header">
+        <div class="dashboard-title">📊 <span id="dashboardTitle">きょうのせいか</span></div>
+        <div class="today-points">⭐ <span id="todayPts">0</span> ポイント</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="pointsChart"></canvas>
+      </div>
+    </div>
+
     <section class="hero">
       <div>
-        <div class="hero-eyebrow">🎒 きょうのぼうけん</div>
-        <h1>勉強して、<em>宝箱を<br>あけよう！</em></h1>
-        <p>カードをえらぶだけでスタート。1回5〜10分の小さなミッションで、星とバッジを集めよう。</p>
+        <div class="hero-eyebrow" id="cfg-eyebrow">🎒 きょうのぼうけん</div>
+        <h1 id="cfg-heroTitle">勉強して、<em>宝箱を<br>あけよう！</em></h1>
+        <p id="cfg-heroDesc">カードをえらぶだけでスタート。1回5〜10分の小さなミッションで、星とバッジを集めよう。</p>
       </div>
     </section>
 
     <section class="mission-panel" aria-label="今日のミッション">
       <div>
-        <div class="mission-title">🎁 今日のミッション</div>
-        <div class="mission-text">さんすうを1つクリアすると、宝箱がひとつ開くよ。</div>
+        <div class="mission-title" id="cfg-missionTitle">🎁 今日のミッション</div>
+        <div class="mission-text" id="cfg-missionText">さんすうを1つクリアすると、宝箱がひとつ開くよ。</div>
       </div>
       <button class="mission-button" type="button" onclick="focusFirstCard()">ミッションへ出発！</button>
     </section>
@@ -143,27 +219,246 @@
     <div id="appRoot"></div>
   </main>
 
-  <footer>© 2026 まなびクエスト — 小学生向けMVP</footer>
+  <footer id="cfg-footer">© 2026 まなびクエスト — 小学生向けMVP</footer>
 
+  <!-- ビューア -->
   <div id="viewer">
     <div class="viewer-bar">
       <div class="viewer-title-wrap">
         <span id="viewerIcon"></span>
         <span id="viewerTitle"></span>
       </div>
-      <button class="close-btn" type="button" onclick="closeApp()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        閉じる
-      </button>
+      <div class="viewer-actions">
+        <button class="btn-done hidden" id="btnDone" type="button" onclick="completeApp()">
+          ⭐ 完了！
+        </button>
+        <button class="close-btn" type="button" onclick="closeApp()">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          閉じる
+        </button>
+      </div>
     </div>
     <iframe id="appFrame" src="" title="アプリ"></iframe>
   </div>
 
+  <!-- ポイントトースト -->
+  <div id="toast"></div>
+
   <script>
+    // =========================================================
+    // 状態管理
+    // =========================================================
+    let CFG      = {};       // config.json
+    let currentUser = null;  // { uid, name, avatar } | null
+    let currentApp  = null;  // 現在ビューアで開いているアプリ情報
+    let chart    = null;     // Chart.js インスタンス
+
+    // =========================================================
+    // Service Worker
+    // =========================================================
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
 
+    // =========================================================
+    // localStorage ヘルパー（uid をキーに使う）
+    // =========================================================
+    const STORAGE_PREFIX = 'mq_';
+
+    function storageKey(uid) {
+      return STORAGE_PREFIX + uid + '_points';
+    }
+
+    function loadPoints(uid) {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey(uid)) || '{}');
+      } catch { return {}; }
+    }
+
+    function savePoints(uid, data) {
+      localStorage.setItem(storageKey(uid), JSON.stringify(data));
+    }
+
+    function todayKey() {
+      return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    }
+
+    function addPoints(uid, pts) {
+      const data  = loadPoints(uid);
+      const today = todayKey();
+      data[today] = (data[today] || 0) + pts;
+      savePoints(uid, data);
+      return data[today];
+    }
+
+    // =========================================================
+    // Google Identity Services
+    // =========================================================
+    function initGoogle(clientId) {
+      if (!clientId || clientId.includes('YOUR_CLIENT_ID')) return;
+      window.google?.accounts.id.initialize({
+        client_id: clientId,
+        callback: onGoogleCredential,
+        auto_select: true,           // 以前ログイン済みなら自動サインイン
+        cancel_on_tap_outside: true,
+      });
+    }
+
+    function startLogin() {
+      if (!CFG.googleClientId || CFG.googleClientId.includes('YOUR_CLIENT_ID')) {
+        alert('config.json の googleClientId を設定してください。');
+        return;
+      }
+      window.google?.accounts.id.prompt();
+    }
+
+    function onGoogleCredential(response) {
+      // JWT をデコード（署名検証はサーバーで行うべきだが、
+      // ユーザー情報をローカル保存するだけなのでクライアント側デコードで十分）
+      const payload = JSON.parse(atob(response.credential.split('.')[1]));
+      currentUser = {
+        uid:    payload.sub,   // Google UID（個人情報ではなく識別子として使用）
+        name:   payload.name,
+        avatar: payload.picture,
+      };
+      onLoginSuccess();
+    }
+
+    function onLoginSuccess() {
+      document.getElementById('btnLogin').style.display  = 'none';
+      document.getElementById('userChip').style.display  = 'flex';
+      document.getElementById('btnLogout').style.display = 'none'; // 初期は非表示
+      document.getElementById('userAvatar').src = currentUser.avatar;
+      document.getElementById('userName').textContent = currentUser.name;
+
+      // 完了ボタンを表示
+      document.getElementById('btnDone').classList.remove('hidden');
+
+      // ダッシュボード表示
+      document.getElementById('dashboard').classList.add('visible');
+      renderChart();
+    }
+
+    function toggleLogout() {
+      const btn = document.getElementById('btnLogout');
+      btn.style.display = btn.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function doLogout() {
+      window.google?.accounts.id.disableAutoSelect();
+      currentUser = null;
+      document.getElementById('btnLogin').style.display  = 'flex';
+      document.getElementById('userChip').style.display  = 'none';
+      document.getElementById('btnLogout').style.display = 'none';
+      document.getElementById('btnDone').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('visible');
+    }
+
+    // =========================================================
+    // 折れ線グラフ
+    // =========================================================
+    function renderChart() {
+      if (!currentUser) return;
+      const days = CFG.pointsChartDays || 14;
+      const data = loadPoints(currentUser.uid);
+
+      // 過去N日の日付ラベルと値を生成
+      const labels = [], values = [];
+      for (let i = days - 1; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key   = d.toISOString().slice(0, 10);
+        const label = `${d.getMonth() + 1}/${d.getDate()}`;
+        labels.push(label);
+        values.push(data[key] || 0);
+      }
+
+      // 今日のポイント更新
+      document.getElementById('todayPts').textContent = data[todayKey()] || 0;
+
+      const ctx = document.getElementById('pointsChart').getContext('2d');
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'ポイント',
+            data: values,
+            borderColor: '#39a7ff',
+            backgroundColor: 'rgba(57,167,255,.12)',
+            borderWidth: 3,
+            pointBackgroundColor: values.map((v, i) => i === values.length - 1 ? '#ff8a00' : '#39a7ff'),
+            pointRadius: values.map((v, i) => i === values.length - 1 ? 7 : 4),
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            fill: true,
+            tension: 0.4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => `⭐ ${ctx.parsed.y} pt`
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: "'Noto Sans JP'", size: 11 } } },
+            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,.06)' }, ticks: { font: { family: "'Noto Sans JP'", size: 11 } } }
+          }
+        }
+      });
+    }
+
+    // =========================================================
+    // ビューア
+    // =========================================================
+    function openApp(url, name, icon, pts) {
+      currentApp = { url, name, icon, pts: pts || 0 };
+      document.getElementById('appFrame').src = url;
+      document.getElementById('viewerTitle').textContent = name;
+      document.getElementById('viewerIcon').textContent  = icon || '📄';
+      document.getElementById('viewer').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.body.style.overscrollBehavior = 'none';
+    }
+
+    function closeApp() {
+      document.getElementById('viewer').style.display = 'none';
+      document.getElementById('appFrame').src = '';
+      document.body.style.overflow = '';
+      document.body.style.overscrollBehavior = '';
+      currentApp = null;
+    }
+
+    function completeApp() {
+      if (!currentUser || !currentApp) return;
+      const earned = currentApp.pts;
+      const total  = addPoints(currentUser.uid, earned);
+      showToast(`⭐ +${earned} ポイント！ きょうの合計: ${total}pt`);
+      renderChart();
+      closeApp();
+    }
+
+    // =========================================================
+    // トースト通知
+    // =========================================================
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    // =========================================================
+    // カード生成
+    // =========================================================
     function makeCard(app, groupColor, delay) {
       const card = document.createElement('div');
       card.className = 'app-card';
@@ -172,9 +467,11 @@
       card.setAttribute('aria-label', app.name + 'を開く');
       card.style.setProperty('--card-color', groupColor || '#38bdf8');
       card.style.animationDelay = delay + 's';
-      card.onclick = () => openApp(app.url, app.name, app.icon);
+
+      const pts = app.reward ? parseInt(app.reward.replace(/[^0-9]/g, ''), 10) || 10 : 10;
+      card.onclick = () => openApp(app.url, app.name, app.icon, pts);
       card.onkeydown = e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openApp(app.url, app.name, app.icon); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openApp(app.url, app.name, app.icon, pts); }
       };
       const tagReward = app.reward ? ' ・ ' + app.reward : '';
       card.innerHTML = `
@@ -189,6 +486,9 @@
       return card;
     }
 
+    // =========================================================
+    // apps.json 読み込み
+    // =========================================================
     async function loadApps() {
       const root = document.getElementById('appRoot');
       try {
@@ -196,30 +496,25 @@
         const groups = await res.json();
         root.innerHTML = '';
         let delay = 0.1;
-
         groups.forEach(group => {
           const section = document.createElement('section');
           section.className = 'group' + (group.type === 'general' ? ' general' : '');
           section.style.setProperty('--group-color', group.color || '#38bdf8');
           section.setAttribute('aria-label', group.name);
-
           section.innerHTML = `
             <div class="group-header">
               <div class="group-badge">
                 <span class="group-badge-icon">${group.icon}</span>
                 <span class="group-badge-name">${group.name}</span>
               </div>
-              <span class="group-count">${group.apps.length}つのアプリ</span>
             </div>
           `;
-
           const row = document.createElement('div');
           row.className = 'card-row';
           group.apps.forEach(app => {
             row.appendChild(makeCard(app, group.color, delay));
             delay += 0.06;
           });
-
           section.appendChild(row);
           root.appendChild(section);
         });
@@ -227,6 +522,43 @@
         root.innerHTML = '<p style="color:#667085;padding:2rem;font-weight:900;">⚠️ apps.json の読み込みに失敗しました。</p>';
         console.error(e);
       }
+    }
+
+    // =========================================================
+    // config.json 読み込み → 全体初期化
+    // =========================================================
+    async function loadConfig() {
+      try {
+        const res = await fetch('./config.json');
+        CFG = await res.json();
+
+        document.getElementById('pageTitle').textContent = CFG.appName || 'まなびクエスト';
+        const tm = document.getElementById('themeColor');
+        if (tm && CFG.themeColor) tm.setAttribute('content', CFG.themeColor);
+        document.documentElement.style.setProperty('--mascot', `'${CFG.mascot || ''}'`);
+
+        const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.innerHTML = val; };
+        set('cfg-appName',      CFG.appName);
+        set('cfg-subtitle',     CFG.appSubtitle);
+        set('cfg-tagline',      CFG.appTagline);
+        set('cfg-eyebrow',      CFG.heroEyebrow);
+        set('cfg-missionTitle', CFG.missionTitle);
+        set('cfg-missionText',  CFG.missionText);
+        set('cfg-footer',       CFG.footerText);
+
+        const titleEl = document.getElementById('cfg-heroTitle');
+        if (titleEl && CFG.heroTitle && CFG.heroTitleEm) {
+          titleEl.innerHTML = `${CFG.heroTitle}<em>${CFG.heroTitleEm}</em>`;
+        }
+        set('cfg-heroDesc', CFG.heroDesc);
+
+        // Google 初期化
+        initGoogle(CFG.googleClientId);
+
+      } catch (e) {
+        console.warn('config.json 読み込み失敗。デフォルト値を使用します。', e);
+      }
+      loadApps();
     }
 
     function focusFirstCard() {
@@ -240,24 +572,8 @@
       }
     }
 
-    function openApp(url, name, icon) {
-      document.getElementById('appFrame').src = url;
-      document.getElementById('viewerTitle').textContent = name;
-      document.getElementById('viewerIcon').textContent  = icon || '📄';
-      document.getElementById('viewer').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      document.body.style.overscrollBehavior = 'none';
-    }
-
-    function closeApp() {
-      document.getElementById('viewer').style.display = 'none';
-      document.getElementById('appFrame').src = '';
-      document.body.style.overflow = '';
-      document.body.style.overscrollBehavior = '';
-    }
-
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApp(); });
-    loadApps();
+    loadConfig();
   </script>
 </body>
 </html>

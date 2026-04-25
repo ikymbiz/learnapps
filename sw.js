@@ -1,8 +1,11 @@
 const CACHE_NAME = 'learning-hub-v3';
 const STATIC_ASSETS = [
   './index.html',
+  './config.json',
   './apps.json',
   './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
   './icon.svg'
 ];
 
@@ -27,7 +30,7 @@ self.addEventListener('activate', event => {
 // Fetch: network-first for apps.json, cache-first for others
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  const isAppsJson = url.pathname.endsWith('apps.json');
+  const isAppsJson = url.pathname.endsWith('apps.json') || url.pathname.endsWith('config.json');
 
   if (isAppsJson) {
     // Network-first so updates to apps.json are always reflected
