@@ -32,6 +32,15 @@
         "url": "https://example.com/math-shape",
         "level": "5分",
         "reward": "⭐ 15"
+      },
+      {
+        "id": "quiz-100math/",
+        "name": "けいさんのあらし",
+        "icon": "📄",
+        "description": "たし算、ひき算、かけ算、わり算でモンスターをたおそう！",
+        "url": "https://ikymbiz.github.io/quiz-100math/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   },
