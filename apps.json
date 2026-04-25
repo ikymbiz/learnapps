@@ -131,15 +131,6 @@
         "url": "https://example.com/english-star",
         "level": "5分",
         "reward": "🏅 10"
-      },
-      {
-        "id": "english-game",
-        "name": "えいごでボウリング",
-        "icon": "🎳",
-        "description": "リスニングゲームで楽しくきたえよう。",
-        "url": "https://example.com/english-bowling",
-        "level": "おすすめ",
-        "reward": "🏅 18"
       }
     ]
   },
