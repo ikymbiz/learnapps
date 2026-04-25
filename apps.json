@@ -104,6 +104,15 @@
         "url": "https://example.com/social-history",
         "level": "10分",
         "reward": "🏆 20"
+      },
+      {
+        "id": "quiz-geo-japan",
+        "name": "都道府県チャレンジ",
+        "icon": "🗾",
+        "description": "",
+        "url": "https://ikymbiz.github.io/quiz-geo-japan/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   },
