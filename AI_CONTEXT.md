@@ -81,6 +81,9 @@
 }
 ```
 
+ヘッダーロゴは `assets/logo.png` で固定（config不要、HTML内で `<img>` 直接参照）
+```
+
 - フィールドを追加するときは、`index.html` の `loadConfig()` 関数にも反映処理を書く
 - HTML 側のプレースホルダー要素には `id="cfg-XXX"` を付ける慣例
 
@@ -116,11 +119,17 @@
 
 ```
 キー:   mq_{googleUID}_points
-値:     {"2026-04-25": 50, "2026-04-24": 30, ...}
+値:     {
+          "2026-04-25": { "math": 30, "japanese": 20 },
+          "2026-04-24": { "math": 50 }
+        }
 ```
 
 - 日付は `YYYY-MM-DD` 形式（ローカルタイム）
-- 値は 1 日の合計ポイント数
+- 各日の値は **教科ID別ポイントのオブジェクト**
+- 教科ID は `apps.json` の各グループの `id`（例: `"math"`, `"japanese"`）
+- 科目外（type: general）アプリのポイントは `"_other"` キー
+- 旧フォーマット（`{date: 数値}`）は `loadPoints()` で `{date: {_legacy: 数値}}` に自動変換
 
 ---
 
@@ -137,7 +146,10 @@
 | `doLogout()` | UI を未ログイン状態に戻す |
 | `openApp(url, name, icon, pts)` | ビューア（iframe）でアプリを開く |
 | `completeApp()` | ポイント加算 → トースト → グラフ更新 → ビューア閉じる |
-| `addPoints(uid, pts)` | localStorage に今日のポイントを加算 |
+| `addPoints(uid, subjectId, pts)` | localStorage に今日のポイントを教科別に加算 |
+| `getDayTotal(dayData)` | ある日の全教科合計 |
+| `getDaySubject(dayData, subjectId)` | ある日の特定教科 or 全合計（subjectId='all'時） |
+| `renderFilterPills()` | 教科フィルターピルを生成して描画 |
 | `loadPoints(uid)` / `savePoints(uid, data)` | localStorage の読み書き |
 | `renderChart()` | Chart.js で過去 N 日の折れ線グラフを描画 |
 | `showToast(msg)` | 画面下部にトースト通知を 2.8 秒表示 |

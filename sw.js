@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dd-learn-v4';
+const CACHE_NAME = 'dd-learn-v5';
 const STATIC_ASSETS = [
   './index.html',
   './config.json',
@@ -8,7 +8,8 @@ const STATIC_ASSETS = [
   './icon-512.png',
   './icon.svg',
   './assets/hero-banner-illustrated.png',
-  './assets/hero-banner-simple.png'
+  './assets/hero-banner-simple.png',
+  './assets/logo.png'
 ];
 
 // Install: cache static assets
