@@ -212,6 +212,15 @@
         "url": "https://ikymbiz.github.io/quiz-mofmof/",
         "level": "おすすめ",
         "reward": null
+      },
+      {
+        "id": "darth-invader",
+        "name": "ダースインベーダー",
+        "icon": "🚀",
+        "description": "",
+        "url": "https://ikymbiz.github.io/darth-invader/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   }
