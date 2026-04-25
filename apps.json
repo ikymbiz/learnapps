@@ -88,13 +88,13 @@
         "reward": null
       },
       {
-        "id": "social-map",
-        "name": "せかいの地図たんけん",
-        "icon": "🗺️",
-        "description": "国の名前と場所を楽しく覚えよう！",
-        "url": "https://example.com/social-map",
+        "id": "quiz-geo-japan",
+        "name": "都道府県チャレンジ",
+        "icon": "🗾",
+        "description": "",
+        "url": "https://ikymbiz.github.io/quiz-geo-japan/",
         "level": "おすすめ",
-        "reward": "🏆 15"
+        "reward": null
       },
       {
         "id": "social-history",
@@ -104,15 +104,6 @@
         "url": "https://example.com/social-history",
         "level": "10分",
         "reward": "🏆 20"
-      },
-      {
-        "id": "quiz-geo-japan",
-        "name": "都道府県チャレンジ",
-        "icon": "🗾",
-        "description": "",
-        "url": "https://ikymbiz.github.io/quiz-geo-japan/",
-        "level": "おすすめ",
-        "reward": null
       }
     ]
   },
