@@ -7,6 +7,15 @@
     "color": "#38bdf8",
     "apps": [
       {
+        "id": "quiz-100math/",
+        "name": "けいさんのあらし",
+        "icon": "📄",
+        "description": "たし算、ひき算、かけ算、わり算でモンスターをたおそう！",
+        "url": "https://ikymbiz.github.io/quiz-100math/",
+        "level": "おすすめ",
+        "reward": null
+      },
+      {
         "id": "math-forest",
         "name": "さんすうの森",
         "icon": "🌲",
@@ -16,15 +25,6 @@
         "reward": "⭐ 20"
       },
       {
-        "id": "math-rocket",
-        "name": "かけ算ロケット",
-        "icon": "🚀",
-        "description": "九九をマスターして宇宙へ！",
-        "url": "https://example.com/math-rocket",
-        "level": "チャレンジ",
-        "reward": "⭐ 30"
-      },
-      {
         "id": "math-shape",
         "name": "かたちのひみつ",
         "icon": "📐",
@@ -32,15 +32,6 @@
         "url": "https://example.com/math-shape",
         "level": "5分",
         "reward": "⭐ 15"
-      },
-      {
-        "id": "quiz-100math/",
-        "name": "けいさんのあらし",
-        "icon": "📄",
-        "description": "たし算、ひき算、かけ算、わり算でモンスターをたおそう！",
-        "url": "https://ikymbiz.github.io/quiz-100math/",
-        "level": "おすすめ",
-        "reward": null
       }
     ]
   },
