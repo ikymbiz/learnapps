@@ -158,24 +158,6 @@
         "url": "https://example.com/timer",
         "level": "いつでも",
         "reward": null
-      },
-      {
-        "id": "memo",
-        "name": "きろくノート",
-        "icon": "📝",
-        "description": "今日やったことをメモしよう。",
-        "url": "https://example.com/memo",
-        "level": "いつでも",
-        "reward": null
-      },
-      {
-        "id": "schedule",
-        "name": "しゅうかんスケジュール",
-        "icon": "📅",
-        "description": "1週間の学習計画をたててみよう。",
-        "url": "https://example.com/schedule",
-        "level": "いつでも",
-        "reward": null
       }
     ]
   },
