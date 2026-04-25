@@ -59,15 +59,6 @@
         "url": "https://example.com/science-lab",
         "level": "人気",
         "reward": "🧪 12"
-      },
-      {
-        "id": "science-nature",
-        "name": "しぜんかんさつ帳",
-        "icon": "🌿",
-        "description": "植物・虫・天気を記録して図鑑をつくろう。",
-        "url": "https://example.com/science-nature",
-        "level": "5分",
-        "reward": "🧪 10"
       }
     ]
   },
