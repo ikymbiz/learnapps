@@ -178,17 +178,17 @@
     .filter-pill.active{background:var(--pill-color,#39a7ff);border-color:var(--pill-color,#39a7ff);color:#fff;box-shadow:0 3px 0 color-mix(in srgb,var(--pill-color,#39a7ff) 60%,#000 40%)}
     .filter-pill .pill-icon{font-size:1rem}
 
-    /* ── インストールバナー ── */
-    .install-banner{position:fixed;bottom:max(1rem,calc(env(safe-area-inset-bottom) + .5rem));left:1rem;right:1rem;max-width:520px;margin:0 auto;display:flex;align-items:center;gap:12px;background:#fff;border:3px solid #39a7ff;border-radius:20px;padding:.75rem 1rem;box-shadow:0 8px 0 #1769aa,0 14px 28px rgba(0,0,0,.18);z-index:500;animation:slideUp .5s ease-out both}
-    @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-    .install-banner-icon{font-size:1.8rem;flex-shrink:0;animation:wiggle 1.6s ease-in-out infinite}
-    .install-banner-text{flex:1;min-width:0}
-    .install-banner-title{font-weight:900;font-size:.92rem;color:#1769aa;line-height:1.3}
-    .install-banner-sub{font-size:.74rem;color:#667085;font-weight:700;margin-top:2px;line-height:1.4}
-    .install-banner-action{flex-shrink:0;background:linear-gradient(180deg,#5fb8ff,#39a7ff);color:#fff;border:0;border-radius:999px;padding:9px 16px;min-height:40px;font-family:inherit;font-weight:900;font-size:.85rem;cursor:pointer;box-shadow:0 4px 0 #1769aa;transition:.15s;white-space:nowrap}
-    .install-banner-action:hover{transform:translateY(-1px);box-shadow:0 5px 0 #1769aa}
-    .install-banner-action:active{transform:translateY(2px);box-shadow:0 2px 0 #1769aa}
-    .install-banner-close{flex-shrink:0;background:transparent;border:0;color:#9ca3af;font-size:1.5rem;font-weight:900;cursor:pointer;padding:0;width:32px;height:32px;border-radius:50%;line-height:1;display:flex;align-items:center;justify-content:center}
+    /* ── インストール案内バナー（控えめ）── */
+    .install-banner{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.92);border:2px solid #c7e9ff;border-radius:16px;padding:.55rem .8rem;margin-bottom:1rem;box-shadow:0 3px 0 rgba(41,70,108,.06);animation:fadeSlide .4s ease-out both}
+    @keyframes fadeSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+    .install-banner-icon{font-size:1.3rem;flex-shrink:0}
+    .install-banner-text{flex:1;min-width:0;line-height:1.3}
+    .install-banner-title{font-weight:900;font-size:.85rem;color:#1769aa}
+    .install-banner-sub{font-size:.72rem;color:#667085;font-weight:700;margin-top:1px}
+    .install-banner-action{flex-shrink:0;background:#39a7ff;color:#fff;border:0;border-radius:999px;padding:6px 14px;min-height:32px;font-family:inherit;font-weight:900;font-size:.78rem;cursor:pointer;transition:.15s;white-space:nowrap}
+    .install-banner-action:hover{background:#1f8fe6}
+    .install-banner-action:active{transform:scale(.96)}
+    .install-banner-close{flex-shrink:0;background:transparent;border:0;color:#9ca3af;font-size:1.3rem;font-weight:900;cursor:pointer;padding:0;width:28px;height:28px;border-radius:50%;line-height:1;display:flex;align-items:center;justify-content:center}
     .install-banner-close:hover{background:#f3f4f6;color:#374151}
 
     /* ── iOSインストール手順モーダル ── */
@@ -238,17 +238,6 @@
     </div>
   </header>
 
-  <!-- インストールバナー（PWA対応ブラウザでのみ表示）-->
-  <div id="installBanner" class="install-banner" hidden>
-    <div class="install-banner-icon">📱</div>
-    <div class="install-banner-text">
-      <div class="install-banner-title">アプリとしてつかえるよ！</div>
-      <div class="install-banner-sub">ホーム画面に追加するとサクサクひらけるよ</div>
-    </div>
-    <button class="install-banner-action" type="button" onclick="handleInstall()">追加する</button>
-    <button class="install-banner-close" type="button" onclick="dismissInstall()" aria-label="閉じる">×</button>
-  </div>
-
   <!-- iOS用インストール手順モーダル -->
   <div id="iosInstall" class="ios-install" hidden>
     <div class="ios-install-content">
@@ -266,6 +255,17 @@
   </div>
 
   <main>
+    <!-- 0. インストール案内バナー（ヘッダー下、控えめ表示）-->
+    <div id="installBanner" class="install-banner" hidden>
+      <div class="install-banner-icon">📱</div>
+      <div class="install-banner-text">
+        <div class="install-banner-title">アプリとしてつかえるよ</div>
+        <div class="install-banner-sub">ホーム画面に追加するとサクサク</div>
+      </div>
+      <button class="install-banner-action" type="button" onclick="handleInstall()">追加</button>
+      <button class="install-banner-close" type="button" onclick="dismissInstall()" aria-label="閉じる">×</button>
+    </div>
+
     <!-- 1. ヒーロー（最上部）-->
     <section class="hero" id="hero">
       <!-- 画像版（heroBannerが設定されている時にJSで表示）-->
@@ -754,7 +754,8 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredInstallPrompt = e;
-      showInstallBanner();
+      // 5秒待ってから表示（操作のジャマをしない）
+      setTimeout(() => showInstallBanner(), 5000);
     });
 
     // インストール完了時はバナーを消す
@@ -803,7 +804,7 @@
       if (isStandalone()) return;
       if (isIOS() && !isInstallDismissed()) {
         // iOS Safari なら少し遅延してバナー表示（読み込み直後の混雑回避）
-        setTimeout(() => showInstallBanner(), 1500);
+        setTimeout(() => showInstallBanner(), 5000);
       }
     }
 
