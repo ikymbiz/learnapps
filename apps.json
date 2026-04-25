@@ -221,6 +221,24 @@
         "url": "https://ikymbiz.github.io/darth-invader/",
         "level": "おすすめ",
         "reward": null
+      },
+      {
+        "id": "tetrisss",
+        "name": "テトリス",
+        "icon": "🎮️",
+        "description": "",
+        "url": "https://ikymbiz.github.io/tetrisss/",
+        "level": "おすすめ",
+        "reward": null
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "icon": "🔢",
+        "description": "",
+        "url": "https://ikymbiz.github.io/sudoku/",
+        "level": "おすすめ",
+        "reward": null
       }
     ]
   }
