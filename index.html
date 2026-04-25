@@ -2,7 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="まなクエ">
+  <meta name="theme-color" content="#39a7ff">
+  <link rel="apple-touch-icon" href="icon.svg">
   <title>まなびクエスト</title>
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,23 +15,114 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--sky:#b9ecff;--sky2:#77d5ff;--cream:#fff8df;--paper:rgba(255,255,255,.92);--ink:#26324d;--muted:#667085;--yellow:#ffd34d;--orange:#ff9f43;--shadow:0 13px 0 rgba(41,70,108,.08),0 18px 34px rgba(41,70,108,.16);--font:'Noto Sans JP',system-ui,sans-serif}
-    html{scroll-behavior:smooth}body{font-family:var(--font);color:var(--ink);min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 8% 10%,rgba(255,255,255,.85) 0 48px,transparent 50px),radial-gradient(circle at 88% 14%,rgba(255,255,255,.75) 0 64px,transparent 66px),linear-gradient(180deg,var(--sky) 0%,var(--sky2) 45%,#d7f8c7 45%,#eefbdc 100%)}
-    .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}.bg-canvas::before{content:'';position:absolute;left:-5vw;right:-5vw;bottom:0;height:46vh;background:radial-gradient(70% 70% at 8% 100%,#74d26a 0 38%,transparent 39%),radial-gradient(70% 70% at 45% 100%,#92df7b 0 42%,transparent 43%),radial-gradient(70% 70% at 92% 100%,#62c964 0 40%,transparent 41%);opacity:.65}.orb{position:absolute;border-radius:999px;animation:float 7s ease-in-out infinite alternate}.orb-1{width:42px;height:42px;background:#fff;top:13%;left:9%;box-shadow:34px 10px 0 8px #fff,70px 3px 0 -2px #fff}.orb-2{width:54px;height:54px;background:#fff;top:9%;right:14%;box-shadow:44px 12px 0 10px #fff,-34px 16px 0 -8px #fff;animation-delay:-2s}.orb-3{width:16px;height:16px;background:var(--yellow);top:28%;left:77%;box-shadow:-130px 74px 0 #ff7a9c,-320px -58px 0 #3aa7ff,-520px 76px 0 #ffd34d;animation-delay:-4s}@keyframes float{from{transform:translateY(0)}to{transform:translateY(-14px)}}@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}@keyframes shine{from{transform:translateX(-120%) rotate(12deg)}to{transform:translateX(220%) rotate(12deg)}}
-    header{position:sticky;top:0;z-index:200;height:72px;padding:0 clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);border-bottom:3px solid rgba(255,255,255,.9)}.logo{display:flex;align-items:center;gap:10px;font-size:clamp(1.15rem,3vw,1.55rem);font-weight:900;color:#1769aa}.logo::before{content:'⭐';font-size:1.8rem;animation:wiggle 1.8s ease-in-out infinite}.logo span{display:block;color:#ff8a00;font-size:.72rem;font-weight:900;letter-spacing:.08em;margin-left:2px}.header-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid #d8efff;color:#1769aa;border-radius:999px;padding:9px 14px;font-weight:900;font-size:.86rem;box-shadow:0 5px 0 #c9e8ff}.pulse-dot{width:10px;height:10px;border-radius:50%;background:#31d16b;box-shadow:0 0 0 5px rgba(49,209,107,.18)}
-    main{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:2rem 1rem 4rem}.hero{position:relative;min-height:300px;display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:38px;box-shadow:var(--shadow);padding:clamp(1.5rem,5vw,3rem);margin-bottom:1.5rem;overflow:hidden;animation:pop .55s ease-out both}.hero::before{content:'✦';position:absolute;top:26px;right:34%;font-size:2rem;color:#ffcf33}.hero::after{content:'🦊';position:absolute;right:clamp(1rem,6vw,5rem);bottom:14px;font-size:clamp(6.5rem,18vw,11rem);filter:drop-shadow(0 14px 0 rgba(39,50,77,.08));animation:float 2.2s ease-in-out infinite alternate}.hero-eyebrow{display:inline-flex;width:fit-content;background:#e6f7ff;color:#1574b8;border:3px solid #bcecff;border-radius:999px;padding:8px 14px;font-weight:900;margin-bottom:1rem}.hero h1{font-size:clamp(2rem,6vw,4.2rem);font-weight:900;line-height:1.12;letter-spacing:.02em;margin-bottom:.9rem}.hero h1 em{font-style:normal;color:#ff8a00;text-shadow:0 4px 0 rgba(255,211,77,.4)}.hero p{max-width:560px;color:#4b5877;font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.9;font-weight:700}
-    .mission-panel{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;background:#fff;border:4px solid #ffe7a3;border-radius:28px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:1.5rem;animation:pop .55s .08s ease-out both}.mission-title{font-weight:900;font-size:1.05rem}.mission-text{color:var(--muted);font-weight:700;margin-top:3px}.mission-button{border:0;border-radius:999px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;font-weight:900;padding:14px 20px;box-shadow:0 7px 0 #d78312;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.18s}.mission-button:hover{transform:translateY(-2px);box-shadow:0 9px 0 #d78312}.mission-button:active{transform:translateY(4px);box-shadow:0 3px 0 #d78312}
-    .app-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}.app-card{position:relative;overflow:hidden;min-height:220px;background:var(--paper);border:4px solid #fff;border-radius:30px;padding:1.35rem;cursor:pointer;box-shadow:var(--shadow);transition:.18s;animation:pop .55s ease-out both}.app-card::before{content:'';position:absolute;inset:0 0 auto 0;height:84px;background:var(--card-color,#38bdf8);opacity:.86}.app-card::after{content:'';position:absolute;top:-20%;left:-40%;width:42%;height:150%;background:rgba(255,255,255,.35);transform:rotate(12deg)}.app-card:hover{transform:translateY(-7px) rotate(-1deg);box-shadow:0 20px 0 rgba(41,70,108,.08),0 24px 42px rgba(41,70,108,.2)}.app-card:hover::after{animation:shine .75s ease-out}.card-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem}.icon-wrap{width:72px;height:72px;border-radius:24px;display:flex;align-items:center;justify-content:center;background:#fff;border:4px solid rgba(255,255,255,.9);font-size:2.2rem;box-shadow:0 8px 0 rgba(41,70,108,.08)}.card-arrow{background:#fff;color:#1769aa;border-radius:999px;padding:8px 12px;font-weight:900;box-shadow:0 5px 0 rgba(41,70,108,.08)}.app-name{position:relative;z-index:1;font-size:1.25rem;font-weight:900;margin-bottom:.5rem}.app-desc{position:relative;z-index:1;color:#596579;line-height:1.7;font-weight:700;min-height:72px}.card-tag{position:relative;z-index:1;display:inline-flex;margin-top:1rem;color:#7a4b00;background:#fff3c4;border:2px solid #ffe28a;border-radius:999px;padding:7px 10px;font-size:.82rem;font-weight:900}.app-card:nth-child(1){animation-delay:.10s}.app-card:nth-child(2){animation-delay:.16s}.app-card:nth-child(3){animation-delay:.22s}.app-card:nth-child(4){animation-delay:.28s}
-    #viewer{display:none;position:fixed;inset:0;z-index:1000;flex-direction:column;background:#fff8df}.viewer-bar{min-height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;background:rgba(255,255,255,.9);border-bottom:4px solid #d8efff;gap:1rem}.viewer-title-wrap{display:flex;align-items:center;gap:10px;min-width:0;font-weight:900}#viewerIcon{font-size:1.5rem}#viewerTitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.close-btn{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid #ffd0dc;color:#d12c5c;padding:9px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:900;box-shadow:0 5px 0 #ffc1d0}#appFrame{flex:1;width:100%;border:none;background:white}footer{position:relative;z-index:1;text-align:center;padding:2rem;color:var(--muted);font-weight:700}
-    @media(max-width:760px){.hero{grid-template-columns:1fr;min-height:360px;padding-bottom:8.5rem}.hero::after{right:1.2rem;font-size:7rem}.mission-panel{grid-template-columns:1fr}.mission-button{width:100%}.header-badge{font-size:.72rem;padding:8px 10px}}
+    *{-webkit-tap-highlight-color:transparent}
+    button,a,[role=button]{touch-action:manipulation}
+    :root{
+      --sky:#b9ecff;--sky2:#77d5ff;--paper:rgba(255,255,255,.92);
+      --ink:#26324d;--muted:#667085;--yellow:#ffd34d;
+      --shadow:0 10px 0 rgba(41,70,108,.07),0 16px 28px rgba(41,70,108,.13);
+      --font:'Noto Sans JP',system-ui,sans-serif;
+      --sl:max(1rem,env(safe-area-inset-left));
+      --sr:max(1rem,env(safe-area-inset-right));
+      --sb:max(2rem,calc(env(safe-area-inset-bottom) + 1rem));
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);color:var(--ink);min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 8% 10%,rgba(255,255,255,.85) 0 48px,transparent 50px),radial-gradient(circle at 88% 14%,rgba(255,255,255,.75) 0 64px,transparent 66px),linear-gradient(180deg,var(--sky) 0%,var(--sky2) 45%,#d7f8c7 45%,#eefbdc 100%)}
+    .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .bg-canvas::before{content:'';position:absolute;left:-5vw;right:-5vw;bottom:0;height:46vh;background:radial-gradient(70% 70% at 8% 100%,#74d26a 0 38%,transparent 39%),radial-gradient(70% 70% at 45% 100%,#92df7b 0 42%,transparent 43%),radial-gradient(70% 70% at 92% 100%,#62c964 0 40%,transparent 41%);opacity:.65}
+    .orb{position:absolute;border-radius:999px;animation:float 7s ease-in-out infinite alternate}
+    .orb-1{width:42px;height:42px;background:#fff;top:13%;left:9%;box-shadow:34px 10px 0 8px #fff,70px 3px 0 -2px #fff}
+    .orb-2{width:54px;height:54px;background:#fff;top:9%;right:14%;box-shadow:44px 12px 0 10px #fff,-34px 16px 0 -8px #fff;animation-delay:-2s}
+    .orb-3{width:16px;height:16px;background:var(--yellow);top:28%;left:77%;box-shadow:-130px 74px 0 #ff7a9c,-320px -58px 0 #3aa7ff,-520px 76px 0 #ffd34d;animation-delay:-4s}
+    @keyframes float{from{transform:translateY(0)}to{transform:translateY(-14px)}}
+    @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+    @keyframes shine{from{transform:translateX(-120%) rotate(12deg)}to{transform:translateX(220%) rotate(12deg)}}
+
+    header{position:sticky;top:0;z-index:200;height:64px;padding:0 var(--sr) 0 var(--sl);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);border-bottom:3px solid rgba(255,255,255,.9)}
+    .logo{display:flex;align-items:center;gap:10px;font-size:clamp(1.1rem,3vw,1.45rem);font-weight:900;color:#1769aa}
+    .logo::before{content:'⭐';font-size:1.7rem;animation:wiggle 1.8s ease-in-out infinite}
+    .logo span{display:block;color:#ff8a00;font-size:.68rem;font-weight:900;letter-spacing:.08em;margin-left:2px}
+    .header-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid #d8efff;color:#1769aa;border-radius:999px;padding:8px 14px;font-weight:900;font-size:.82rem;box-shadow:0 4px 0 #c9e8ff}
+    .pulse-dot{width:10px;height:10px;border-radius:50%;background:#31d16b;box-shadow:0 0 0 4px rgba(49,209,107,.18)}
+
+    main{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:1.75rem var(--sr) var(--sb) var(--sl)}
+
+    .hero{position:relative;min-height:280px;display:grid;grid-template-columns:1.2fr .8fr;gap:1.5rem;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,223,.95));border:4px solid #fff;border-radius:32px;box-shadow:var(--shadow);padding:clamp(1.25rem,5vw,2.5rem);margin-bottom:1.25rem;overflow:hidden;animation:pop .55s ease-out both}
+    .hero::before{content:'✦';position:absolute;top:22px;right:34%;font-size:2rem;color:#ffcf33}
+    .hero::after{content:'🦊';position:absolute;right:clamp(1rem,6vw,5rem);bottom:10px;font-size:clamp(6rem,18vw,10rem);filter:drop-shadow(0 12px 0 rgba(39,50,77,.08));animation:float 2.2s ease-in-out infinite alternate}
+    .hero-eyebrow{display:inline-flex;width:fit-content;background:#e6f7ff;color:#1574b8;border:3px solid #bcecff;border-radius:999px;padding:7px 14px;font-weight:900;margin-bottom:.9rem}
+    .hero h1{font-size:clamp(1.85rem,6vw,3.8rem);font-weight:900;line-height:1.12;letter-spacing:.02em;margin-bottom:.8rem}
+    .hero h1 em{font-style:normal;color:#ff8a00;text-shadow:0 4px 0 rgba(255,211,77,.4)}
+    .hero p{max-width:560px;color:#4b5877;font-size:clamp(.95rem,2.2vw,1.1rem);line-height:1.85;font-weight:700}
+
+    .mission-panel{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;background:#fff;border:4px solid #ffe7a3;border-radius:24px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:2rem;animation:pop .55s .08s ease-out both}
+    .mission-title{font-weight:900;font-size:1rem}
+    .mission-text{color:var(--muted);font-weight:700;margin-top:2px;font-size:.9rem}
+    .mission-button{border:0;border-radius:999px;background:linear-gradient(180deg,#ffe26a,#ffae28);color:#5b3200;font-weight:900;padding:12px 20px;min-height:44px;box-shadow:0 6px 0 #d78312;cursor:pointer;font-family:inherit;white-space:nowrap;font-size:.95rem;transition:.18s}
+    .mission-button:hover{transform:translateY(-2px);box-shadow:0 8px 0 #d78312}
+    .mission-button:active{transform:translateY(4px);box-shadow:0 2px 0 #d78312}
+
+    /* ── グループセクション ── */
+    .group{margin-bottom:2.25rem;animation:pop .55s ease-out both}
+    .group-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-left:4px}
+    .group-badge{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--group-color,#38bdf8);border-radius:999px;padding:8px 16px;box-shadow:0 4px 0 color-mix(in srgb,var(--group-color,#38bdf8) 60%,#000 40%)}
+    .group-badge-icon{font-size:1.3rem}
+    .group-badge-name{font-size:1rem;font-weight:900;color:var(--ink)}
+    .group.general .group-badge{background:linear-gradient(135deg,#f3f0ff,#ede9fe);border-color:#c4b5fd;box-shadow:0 4px 0 #a78bfa55}
+    .group-count{font-size:.78rem;color:var(--muted);font-weight:700;margin-left:2px}
+
+    /* ── カード行（モバイル: 横スクロール / デスクトップ: グリッド）── */
+    .card-row{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;scrollbar-width:none;-ms-overflow-style:none}
+    .card-row::-webkit-scrollbar{display:none}
+    @media(min-width:700px){.card-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));overflow-x:visible;scroll-snap-type:none;padding-bottom:0}}
+
+    /* ── カード ── */
+    .app-card{position:relative;overflow:hidden;flex:0 0 210px;min-height:205px;background:var(--paper);border:4px solid #fff;border-radius:26px;padding:1.2rem;cursor:pointer;box-shadow:var(--shadow);scroll-snap-align:start;transition:.18s;animation:pop .55s ease-out both}
+    @media(min-width:700px){.app-card{flex:unset}}
+    .app-card::before{content:'';position:absolute;inset:0 0 auto 0;height:76px;background:var(--card-color,#38bdf8);opacity:.86}
+    .app-card::after{content:'';position:absolute;top:-20%;left:-40%;width:42%;height:150%;background:rgba(255,255,255,.35);transform:rotate(12deg)}
+    .app-card:hover{transform:translateY(-6px) rotate(-.8deg);box-shadow:0 20px 0 rgba(41,70,108,.08),0 22px 38px rgba(41,70,108,.18)}
+    .app-card:hover::after{animation:shine .7s ease-out}
+    .card-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem}
+    .icon-wrap{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;border:4px solid rgba(255,255,255,.9);font-size:1.9rem;box-shadow:0 6px 0 rgba(41,70,108,.08)}
+    .card-arrow{background:#fff;color:#1769aa;border-radius:999px;padding:8px 12px;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;box-shadow:0 4px 0 rgba(41,70,108,.08)}
+    .app-name{position:relative;z-index:1;font-size:1.05rem;font-weight:900;margin-bottom:.35rem}
+    .app-desc{position:relative;z-index:1;color:#596579;line-height:1.6;font-weight:700;font-size:.85rem;min-height:60px}
+    .card-tag{position:relative;z-index:1;display:inline-flex;margin-top:.85rem;color:#7a4b00;background:#fff3c4;border:2px solid #ffe28a;border-radius:999px;padding:5px 10px;font-size:.76rem;font-weight:900}
+    .group.general .card-tag{color:#4c1d95;background:#ede9fe;border-color:#c4b5fd}
+
+    /* ── ビューア ── */
+    #viewer{display:none;position:fixed;inset:0;z-index:1000;flex-direction:column;background:#fff8df}
+    .viewer-bar{min-height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 max(1rem,env(safe-area-inset-right)) 0 max(1rem,env(safe-area-inset-left));background:rgba(255,255,255,.9);border-bottom:4px solid #d8efff;gap:1rem}
+    .viewer-title-wrap{display:flex;align-items:center;gap:10px;min-width:0;font-weight:900}
+    #viewerIcon{font-size:1.4rem;flex-shrink:0}
+    #viewerTitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .close-btn{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid #ffd0dc;color:#d12c5c;padding:10px 16px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:900;box-shadow:0 4px 0 #ffc1d0;flex-shrink:0}
+    #appFrame{flex:1;width:100%;border:none;background:white;padding-bottom:env(safe-area-inset-bottom)}
+    footer{position:relative;z-index:1;text-align:center;padding:1.5rem 1rem;color:var(--muted);font-weight:700;font-size:.85rem}
+
+    @media(max-width:760px){
+      .hero{grid-template-columns:1fr;min-height:320px;padding-bottom:8rem}
+      .hero::after{right:1rem;font-size:6.5rem}
+      .mission-panel{grid-template-columns:1fr}
+      .mission-button{width:100%}
+      .header-badge{font-size:.74rem;padding:7px 10px}
+    }
   </style>
 </head>
 <body>
-  <div class="bg-canvas"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  <div class="bg-canvas">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <header>
     <div class="logo">まなびクエスト <span>小学生MVP</span></div>
     <div class="header-badge"><span class="pulse-dot"></span>今日も冒険中</div>
   </header>
+
   <main>
     <section class="hero">
       <div>
@@ -35,6 +131,7 @@
         <p>カードをえらぶだけでスタート。1回5〜10分の小さなミッションで、星とバッジを集めよう。</p>
       </div>
     </section>
+
     <section class="mission-panel" aria-label="今日のミッション">
       <div>
         <div class="mission-title">🎁 今日のミッション</div>
@@ -42,45 +139,124 @@
       </div>
       <button class="mission-button" type="button" onclick="focusFirstCard()">ミッションへ出発！</button>
     </section>
-    <div class="app-grid" id="appGrid"></div>
+
+    <div id="appRoot"></div>
   </main>
+
   <footer>© 2026 まなびクエスト — 小学生向けMVP</footer>
+
   <div id="viewer">
     <div class="viewer-bar">
-      <div class="viewer-title-wrap"><span id="viewerIcon"></span><span id="viewerTitle"></span></div>
-      <button class="close-btn" onclick="closeApp()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="viewer-title-wrap">
+        <span id="viewerIcon"></span>
+        <span id="viewerTitle"></span>
+      </div>
+      <button class="close-btn" type="button" onclick="closeApp()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
         閉じる
       </button>
     </div>
     <iframe id="appFrame" src="" title="アプリ"></iframe>
   </div>
+
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
-    async function loadApps(){
-      const grid=document.getElementById('appGrid');
-      try{
-        const res=await fetch('./apps.json');
-        const apps=await res.json();
-        grid.innerHTML='';
-        apps.forEach(app=>{
-          const card=document.createElement('div');
-          card.className='app-card';
-          card.setAttribute('role','button');
-          card.setAttribute('tabindex','0');
-          card.setAttribute('aria-label',app.name+'を開く');
-          card.style.setProperty('--card-color',app.color||'#38bdf8');
-          card.onclick=()=>openApp(app.url,app.name,app.icon);
-          card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openApp(app.url,app.name,app.icon);}};
-          card.innerHTML=`<div class="card-top"><div class="icon-wrap">${app.icon}</div><div class="card-arrow">出発</div></div><div class="app-name">${app.name}</div><div class="app-desc">${app.description}</div><div class="card-tag">${app.level||'ミッション'} ・ ${app.reward||'⭐'}</div>`;
-          grid.appendChild(card);
-        });
-      }catch(e){grid.innerHTML='<p style="color:#667085;padding:2rem;font-weight:900;">⚠️ apps.json の読み込みに失敗しました。</p>';console.error(e)}
+
+    function makeCard(app, groupColor, delay) {
+      const card = document.createElement('div');
+      card.className = 'app-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', app.name + 'を開く');
+      card.style.setProperty('--card-color', groupColor || '#38bdf8');
+      card.style.animationDelay = delay + 's';
+      card.onclick = () => openApp(app.url, app.name, app.icon);
+      card.onkeydown = e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openApp(app.url, app.name, app.icon); }
+      };
+      const tagReward = app.reward ? ' ・ ' + app.reward : '';
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="icon-wrap">${app.icon}</div>
+          <div class="card-arrow">出発</div>
+        </div>
+        <div class="app-name">${app.name}</div>
+        <div class="app-desc">${app.description}</div>
+        <div class="card-tag">${app.level || 'ミッション'}${tagReward}</div>
+      `;
+      return card;
     }
-    function focusFirstCard(){const first=document.querySelector('.app-card');if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.animate([{transform:'scale(1)'},{transform:'scale(1.04) rotate(-1deg)'},{transform:'scale(1)'}],{duration:650,easing:'ease-out'});}}
-    function openApp(url,name,icon){document.getElementById('appFrame').src=url;document.getElementById('viewerTitle').textContent=name;document.getElementById('viewerIcon').textContent=icon||'📄';document.getElementById('viewer').style.display='flex';document.body.style.overflow='hidden'}
-    function closeApp(){document.getElementById('viewer').style.display='none';document.getElementById('appFrame').src='';document.body.style.overflow=''}
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeApp()});
+
+    async function loadApps() {
+      const root = document.getElementById('appRoot');
+      try {
+        const res    = await fetch('./apps.json');
+        const groups = await res.json();
+        root.innerHTML = '';
+        let delay = 0.1;
+
+        groups.forEach(group => {
+          const section = document.createElement('section');
+          section.className = 'group' + (group.type === 'general' ? ' general' : '');
+          section.style.setProperty('--group-color', group.color || '#38bdf8');
+          section.setAttribute('aria-label', group.name);
+
+          section.innerHTML = `
+            <div class="group-header">
+              <div class="group-badge">
+                <span class="group-badge-icon">${group.icon}</span>
+                <span class="group-badge-name">${group.name}</span>
+              </div>
+              <span class="group-count">${group.apps.length}つのアプリ</span>
+            </div>
+          `;
+
+          const row = document.createElement('div');
+          row.className = 'card-row';
+          group.apps.forEach(app => {
+            row.appendChild(makeCard(app, group.color, delay));
+            delay += 0.06;
+          });
+
+          section.appendChild(row);
+          root.appendChild(section);
+        });
+      } catch (e) {
+        root.innerHTML = '<p style="color:#667085;padding:2rem;font-weight:900;">⚠️ apps.json の読み込みに失敗しました。</p>';
+        console.error(e);
+      }
+    }
+
+    function focusFirstCard() {
+      const first = document.querySelector('.app-card');
+      if (first) {
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        first.animate(
+          [{ transform: 'scale(1)' }, { transform: 'scale(1.04) rotate(-1deg)' }, { transform: 'scale(1)' }],
+          { duration: 650, easing: 'ease-out' }
+        );
+      }
+    }
+
+    function openApp(url, name, icon) {
+      document.getElementById('appFrame').src = url;
+      document.getElementById('viewerTitle').textContent = name;
+      document.getElementById('viewerIcon').textContent  = icon || '📄';
+      document.getElementById('viewer').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.body.style.overscrollBehavior = 'none';
+    }
+
+    function closeApp() {
+      document.getElementById('viewer').style.display = 'none';
+      document.getElementById('appFrame').src = '';
+      document.body.style.overflow = '';
+      document.body.style.overscrollBehavior = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApp(); });
     loadApps();
   </script>
 </body>
