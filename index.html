@@ -191,24 +191,8 @@
     .install-banner-close{flex-shrink:0;background:transparent;border:0;color:#9ca3af;font-size:1.3rem;font-weight:900;cursor:pointer;padding:0;width:28px;height:28px;border-radius:50%;line-height:1;display:flex;align-items:center;justify-content:center}
     .install-banner-close:hover{background:#f3f4f6;color:#374151}
 
-    /* ── iOSインストール手順モーダル ── */
-    .ios-install{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);animation:fadeIn .25s ease-out both}
-    .ios-install-content{position:relative;background:#fff;border-radius:24px;padding:1.5rem 1.25rem;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-    .ios-install-x{position:absolute;top:8px;right:10px;background:transparent;border:0;font-size:1.8rem;font-weight:900;color:#9ca3af;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-    .ios-install-x:hover{background:#f3f4f6}
-    .ios-install-icon{font-size:3rem;margin-bottom:.5rem}
-    .ios-install h3{font-size:1.2rem;color:#1769aa;margin-bottom:1rem;font-weight:900}
-    .ios-install-steps{text-align:left;list-style:none;padding:0;margin:0 0 1.25rem 0;counter-reset:step}
-    .ios-install-steps li{counter-increment:step;padding:8px 0 8px 36px;position:relative;font-size:.9rem;color:#26324d;font-weight:700;line-height:1.5;border-bottom:1px dashed #e5e7eb}
-    .ios-install-steps li:last-child{border-bottom:0}
-    .ios-install-steps li::before{content:counter(step);position:absolute;left:0;top:8px;width:26px;height:26px;background:#39a7ff;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem}
-    .ios-install-steps strong{color:#1769aa;font-weight:900}
-    .ios-share{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:#e6f7ff;border-radius:6px;font-size:.95rem}
-    .ios-install-ok{background:linear-gradient(180deg,#5fb8ff,#39a7ff);color:#fff;border:0;border-radius:999px;padding:12px 24px;min-height:44px;font-family:inherit;font-weight:900;font-size:.95rem;cursor:pointer;box-shadow:0 5px 0 #1769aa;width:100%}
-    .ios-install-ok:hover{transform:translateY(-1px);box-shadow:0 6px 0 #1769aa}
-
-    /* インストール済みなら全部隠す */
-    @media(display-mode:standalone){.install-banner,.ios-install{display:none !important}}
+    /* インストール済みなら自動で隠す */
+    @media(display-mode:standalone){.install-banner{display:none !important}}
   </style>
 </head>
 <body>
@@ -237,22 +221,6 @@
       <button class="btn-logout" id="btnLogout" style="display:none" onclick="doLogout()">ログアウト</button>
     </div>
   </header>
-
-  <!-- iOS用インストール手順モーダル -->
-  <div id="iosInstall" class="ios-install" hidden>
-    <div class="ios-install-content">
-      <button class="ios-install-x" type="button" onclick="closeIosInstall()" aria-label="閉じる">×</button>
-      <div class="ios-install-icon">📱</div>
-      <h3>ホーム画面に追加</h3>
-      <ol class="ios-install-steps">
-        <li>下にある <strong>共有ボタン</strong>（<span class="ios-share">⬆️</span>）をタップ</li>
-        <li>メニューを下にスクロール</li>
-        <li><strong>「ホーム画面に追加」</strong> をタップ</li>
-        <li>右上の <strong>「追加」</strong> をタップ</li>
-      </ol>
-      <button class="ios-install-ok" type="button" onclick="closeIosInstall()">わかった！</button>
-    </div>
-  </div>
 
   <main>
     <!-- 0. インストール案内バナー（ヘッダー下、控えめ表示）-->
@@ -739,9 +707,6 @@
     // =========================================================
     let deferredInstallPrompt = null;
 
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    }
     function isStandalone() {
       return window.matchMedia('(display-mode: standalone)').matches
           || window.navigator.standalone === true;
@@ -777,35 +742,26 @@
 
     function handleInstall() {
       if (deferredInstallPrompt) {
-        // Chrome / Android系
+        // Chrome / Android: ネイティブのインストールダイアログを起動
         deferredInstallPrompt.prompt();
         deferredInstallPrompt.userChoice.then(() => {
           deferredInstallPrompt = null;
           hideInstallBanner();
         });
-      } else if (isIOS()) {
-        // iOS Safari は自動インストールAPIなし → 手順を表示
-        document.getElementById('iosInstall').hidden = false;
       } else {
-        // その他: メニューから手動でインストールしてもらう
-        alert('ブラウザのメニューから「ホーム画面に追加」「アプリをインストール」を選んでください。');
+        // インストールAPIが使えない環境（iOS Safari等）はバナーを閉じるだけ
+        dismissInstall();
       }
     }
     function dismissInstall() {
       localStorage.setItem('mq_install_dismissed', '1');
       hideInstallBanner();
     }
-    function closeIosInstall() {
-      document.getElementById('iosInstall').hidden = true;
-    }
 
-    // 初期判定: iOSの場合は beforeinstallprompt が来ないので即時表示
+    // 初期化（インストール済み or 却下済みなら何もしない）
     function initInstallUI() {
-      if (isStandalone()) return;
-      if (isIOS() && !isInstallDismissed()) {
-        // iOS Safari なら少し遅延してバナー表示（読み込み直後の混雑回避）
-        setTimeout(() => showInstallBanner(), 5000);
-      }
+      // beforeinstallprompt イベント発火を待つ。
+      // 発火しない環境（iOS等）ではバナーは表示しない。
     }
 
     async function loadConfig() {
