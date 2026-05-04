@@ -41,6 +41,15 @@
         "url": "https://ikymbiz.github.io/quiz-kanji/",
         "level": "人気",
         "reward": "💎 20"
+      },
+      {
+        "id": "app-yuru",
+        "name": "ゆるゆるどうぶつ",
+        "icon": "🐰",
+        "description": "ゆるゆる動物の問題だよ",
+        "url": "http://ap9en2.ddashpot.com/app_yuru/",
+        "level": "おすすめ",
+        "reward": "10"
       }
     ]
   },
