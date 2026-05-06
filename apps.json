@@ -23,6 +23,15 @@
         "url": "https://ikymbiz.github.io/quiz-flash-anzan/",
         "level": "おすすめ",
         "reward": "⭐ 20"
+      },
+      {
+        "id": "tani-kansan",
+        "name": "単位の王国",
+        "icon": "📄",
+        "description": "ながさ、かさ、おもさの単位の計算を練習しよう",
+        "url": "https://ap9en2.ddashpot.com/quiz-tani-kansan/",
+        "level": "おすすめ",
+        "reward": "20"
       }
     ]
   },
